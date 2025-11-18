@@ -1,4 +1,14 @@
 services:
+  nginx:
+    build: ./nginx
+    container_name: incapacities-nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    networks:
+      - incapacities-network
+    restart: unless-stopped
   app:
     build: .
     ports:
