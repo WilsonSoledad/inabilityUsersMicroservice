@@ -12,18 +12,24 @@ if (!DB_NAME || !DB_USER || !DB_PASSWORD || !DB_HOST || !DB_PORT) {
 export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   port: parseInt(DB_PORT, 10),
-  dialect: "mysql",
+  dialect: "postgres",
   logging: false,
 });
 
 export const connectDB = async (): Promise<void> => {
   try {
     await sequelize.authenticate();
-    console.log("Connection to MySQL correctly established");
-    await sequelize.sync({ alter: true });
-    console.log("Models syncronized to database");
+    console.log("✅ UsersService conectado a PostgreSQL");
+    
+    // Importar UserModel para sincronizar solo este modelo
+    const { UserModel } = await import('../../../infrastructure/database/user.model');
+    
+    if (process.env.NODE_ENV === 'development') {
+      await UserModel.sync({ alter: true });
+      console.log("✅ Tabla 'users' sincronizada");
+    }
   } catch (error) {
-    console.error("could not connect to database: ", error);
+    console.error("❌ Error conectando a la base de datos:", error);
     process.exit(1);
   }
 };
