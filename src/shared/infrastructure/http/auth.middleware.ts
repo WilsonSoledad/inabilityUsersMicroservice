@@ -12,18 +12,18 @@ export const authMiddleware = (req: AuthRequest, res: Response, next: NextFuncti
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ message: 'denied access. no token provided.' });
+      return res.status(401).json({ message: 'Acceso denegado. Token no proporcionado' });
     }
 
     const token = authHeader.split(' ')[1];
 
     if (!token) {
-      return res.status(401).json({ message: 'denied access. invalid Token.' });
+      return res.status(401).json({ message: 'Acceso denegado. Token inválido' });
     }
 
     const secret = process.env.JWT_SECRET;
     if (!secret) {
-      throw new Error('JWT_SECRET is not defined in environment variables.');
+      throw new Error('JWT_SECRET no está definido en las variables de entorno');
     }
 
     const decoded = jwt.verify(token, secret);
@@ -35,11 +35,11 @@ export const authMiddleware = (req: AuthRequest, res: Response, next: NextFuncti
       };
       next();
     } else {
-      throw new jwt.JsonWebTokenError('payload token invalid');
+      throw new jwt.JsonWebTokenError('Payload del token inválido');
     }
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {
-      return res.status(401).json({ message: `Invalid Token: ${error.message}` });
+      return res.status(401).json({ message: `Token inválido: ${error.message}` });
     }
     return res.status(500).json({ message: (error as Error).message });
   }

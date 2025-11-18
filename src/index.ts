@@ -1,19 +1,18 @@
-import * as dotenv from "dotenv";
+import "./shared/config/env.config"; // Valida variables de entorno primero
 import { app, startDatabase } from "./shared/infrastructure/http/app";
-
-dotenv.config();
-
-const PORT = process.env.PORT || 3000;
+import { env } from "./shared/config/env.config";
 
 const startServer = async (): Promise<void> => {
   try {
     await startDatabase();
 
-    app.listen(PORT, () => {
-      console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+    app.listen(env.PORT, () => {
+      console.log(`🚀 UsersService corriendo en http://localhost:${env.PORT}`);
+      console.log(`📊 Entorno: ${env.NODE_ENV}`);
     });
   } catch (error) {
     console.error("❌ Error al iniciar el servidor:", error);
+    process.exit(1);
   }
 };
 

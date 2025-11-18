@@ -16,7 +16,7 @@ export class UserService {
 
   async createUser(actor: Actor, userData: User): Promise<User> {
     if (actor.role !== UserRole.ADMIN) {
-      throw new AuthorizationError("do not have permissions to create users.");
+      throw new AuthorizationError("No tiene permisos para crear usuarios");
     }
 
     const hashed = await bcrypt.hash(userData.password, 10);
@@ -36,7 +36,7 @@ export class UserService {
   async update(actor: Actor, id: number, payload: UpdatableUser) {
     if (actor.role !== UserRole.ADMIN) {
       throw new AuthorizationError(
-        "do not have permissions to update users."
+        "No tiene permisos para actualizar usuarios"
       );
     }
 
@@ -56,7 +56,7 @@ export class UserService {
 
   async delete(actor: Actor, id: number) {
     if (actor.role !== UserRole.ADMIN) {
-      throw new AuthorizationError("do not have permissions to delete users.");
+      throw new AuthorizationError("No tiene permisos para eliminar usuarios");
     }
 
     return this.userRepository.delete(id);
