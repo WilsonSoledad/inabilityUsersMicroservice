@@ -38,7 +38,7 @@ app.get("/health", async (req, res) => {
   }
 });
 
-app.use("/api/v1/users", userRouter);
+app.use("/api/users", userRouter);
 
 // Error handlers (deben ir al final)
 app.use(notFoundHandler);

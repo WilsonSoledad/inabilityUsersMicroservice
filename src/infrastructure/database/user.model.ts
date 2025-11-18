@@ -16,17 +16,19 @@ UserModel.init(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
+      field: 'id_user',
+      autoIncrement: true,
     },
     firstName: {
-      type: new DataTypes.STRING(50),
+      type: new DataTypes.STRING(255),
       allowNull: false,
     },
     lastName: {
-      type: new DataTypes.STRING(50),
+      type: new DataTypes.STRING(255),
       allowNull: false,
     },
     email: {
-      type: new DataTypes.STRING(50),
+      type: new DataTypes.STRING(255),
       allowNull: false,
       unique: true,
     },
@@ -46,5 +48,8 @@ UserModel.init(
   {
     sequelize,
     tableName: "users",
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
   }
 );
