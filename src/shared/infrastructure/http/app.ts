@@ -1,7 +1,7 @@
 import express, { Application } from "express";
 import { connectDB } from "../database/sequelize.config";
 
-import { UserService } from "../../../aplication/user.service";
+import { UserService } from "../../../application/user.service";
 import { SequelizeUserRepository } from "../../../infrastructure/database/sequelize.user.repository";
 import { UserController } from "../../../infrastructure/http/user.controller";
 import { createUserRouter } from "../../../infrastructure/http/user.router";

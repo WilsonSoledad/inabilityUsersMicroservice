@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { UserService } from "../../aplication/user.service";
-import { CreateUserDto } from "../../aplication/dtos/create-user.dto";
-import { UpdateUserDto } from "../../aplication/dtos/update-user.dto";
-import { LoginUserDto } from "../../aplication/dtos/login-user.dto";
+import { UserService } from "../../application/user.service";
+import { CreateUserDto } from "../../application/dtos/create-user.dto";
+import { UpdateUserDto } from "../../application/dtos/update-user.dto";
+import { LoginUserDto } from "../../application/dtos/login-user.dto";
 import { AuthRequest } from "../../shared/infrastructure/http/auth.middleware";
-import { AuthorizationError } from "../../aplication/errors/authorization.error";
+import { AuthorizationError } from "../../application/errors/authorization.error";
 import { User } from "../../domain/user.entity";
 
 export class UserController {
