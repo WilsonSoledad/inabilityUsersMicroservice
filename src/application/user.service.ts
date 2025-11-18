@@ -8,6 +8,7 @@ import {
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { AuthorizationError } from "./errors/authorization.error";
+import { DuplicateError } from "./errors/duplicate.error";
 
 type Actor = { role: UserRole };
 
@@ -17,6 +18,18 @@ export class UserService {
   async createUser(actor: Actor, userData: User): Promise<User> {
     if (actor.role !== UserRole.ADMIN) {
       throw new AuthorizationError("No tiene permisos para crear usuarios");
+    }
+
+    // Validar si el ID ya existe
+    const existingById = await this.userRepository.findById(userData.id);
+    if (existingById) {
+      throw new DuplicateError(`El usuario con ID ${userData.id} ya existe`, "id");
+    }
+
+    // Validar si el email ya existe
+    const existingByEmail = await this.userRepository.findByEmail(userData.email);
+    if (existingByEmail) {
+      throw new DuplicateError(`El email ${userData.email} ya está registrado`, "email");
     }
 
     const hashed = await bcrypt.hash(userData.password, 10);

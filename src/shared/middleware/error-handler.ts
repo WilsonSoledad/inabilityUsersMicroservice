@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import ResponseHandler from '../utils/response-handler';
 import { AuthorizationError } from '../../application/errors/authorization.error';
+import { DuplicateError } from '../../application/errors/duplicate.error';
 
 export interface CustomError extends Error {
   statusCode?: number;
@@ -26,6 +27,10 @@ export const errorHandler = (
 
   if (error instanceof AuthorizationError) {
     return ResponseHandler.forbidden(res, error.message);
+  }
+
+  if (error instanceof DuplicateError) {
+    return ResponseHandler.conflict(res, error.message);
   }
 
   switch (statusCode) {
