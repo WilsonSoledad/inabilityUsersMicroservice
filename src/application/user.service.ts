@@ -20,6 +20,12 @@ export class UserService {
       throw new AuthorizationError("No tiene permisos para crear usuarios");
     }
 
+    // Validar que el ID no exceda el límite de PostgreSQL INTEGER (2,147,483,647)
+    const MAX_INT = 2147483647;
+    if (userData.id > MAX_INT) {
+      throw new Error(`El ID ${userData.id} excede el límite máximo permitido (${MAX_INT})`);
+    }
+
     // Validar si el ID ya existe
     const existingById = await this.userRepository.findById(userData.id);
     if (existingById) {

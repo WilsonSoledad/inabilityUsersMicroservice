@@ -24,15 +24,15 @@ app.get("/health", async (req, res) => {
     await sequelize.authenticate();
     res.status(200).json({ 
       status: "ok", 
-      message: "UsersService running",
-      database: "connected",
+      message: "Servicio de usuarios en ejecución",
+      database: "conectada",
       timestamp: new Date().toISOString()
     });
   } catch (error) {
     res.status(503).json({ 
       status: "error", 
-      message: "UsersService unhealthy",
-      database: "disconnected",
+      message: "Servicio de usuarios no disponible",
+      database: "desconectada",
       timestamp: new Date().toISOString()
     });
   }
